@@ -3,6 +3,8 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import type Author from '../interfaces/author'
+import { Splide, SplideSlide } from '@splidejs/react-splide'
+import '@splidejs/react-splide/css'
 
 type Props = {
   title: string
@@ -24,7 +26,23 @@ const HeroPost = ({
   return (
     <section>
       <div className="mb-8 md:mb-16">
-        <CoverImage title={title} src={coverImage} slug={slug} />
+        <Splide
+          options={ {
+            rewind: true,
+            autoplay : true,
+            interval : 3000,
+          } }
+        >
+          <SplideSlide>
+            <CoverImage title={title} src={coverImage} slug={slug} />
+          </SplideSlide>
+          <SplideSlide>
+            <CoverImage title={title} src={coverImage} slug={slug} />
+          </SplideSlide>
+          <SplideSlide>
+            <CoverImage title={title} src={coverImage} slug={slug} />
+          </SplideSlide>
+        </Splide>
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
