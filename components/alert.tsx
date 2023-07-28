@@ -29,14 +29,21 @@ const Alert = ({ preview }: Props) => {
             </>
           ) : (
             <>
-              The source code for this blog is{' '}
+              このページは{' '}
+              <a
+                href={`https://github.com/h-takamori`}
+                className="underline hover:text-blue-600 duration-200 transition-colors"
+              >
+                https://github.com/h-takamori
+              </a>
+              {' '}のポートフォリオです。Next.jsの開発元であるVercelから提供されている
               <a
                 href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
                 className="underline hover:text-blue-600 duration-200 transition-colors"
               >
-                available on GitHub
+                サンプルコード
               </a>
-              .
+              に独自の改変を加えました。
             </>
           )}
         </div>
