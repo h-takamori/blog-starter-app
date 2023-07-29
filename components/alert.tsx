@@ -1,6 +1,7 @@
 import Container from './container'
 import cn from 'classnames'
 import { EXAMPLE_PATH } from '../lib/constants'
+import Link from 'next/link'
 
 type Props = {
   preview?: boolean
@@ -44,6 +45,14 @@ const Alert = ({ preview }: Props) => {
                 サンプルコード
               </a>
               に独自の改変を加えました。
+              <Link
+                as={`posts/update-history`}
+                href="posts/update-history"
+                className="underline hover:text-blue-600 duration-200 transition-colors"
+              >
+                更新履歴
+              </Link>
+              をご参照ください。
             </>
           )}
         </div>
