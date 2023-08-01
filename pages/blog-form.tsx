@@ -41,7 +41,6 @@ const schema = yup.object().shape({
 export default function BlogForm() {
   // Next.jsのAPIに送信する関数
   const submitForm = async (data: FormValues) => {
-    console.log(JSON.stringify(data));
     try {
       const response = await fetch("/api/blog", {
         method: "POST",
