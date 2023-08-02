@@ -24,7 +24,9 @@ export default async function handler(
     await sql`BEGIN`;
 
     // Blog_userテーブルにデータを登録し、idカラムの値を取得
+    console.log(`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id`);
     const result = await sql`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id`;
+    console.log(`Done.`);
 
     // resultは配列なので、最初の要素を取り出す
     const row = result[0];
