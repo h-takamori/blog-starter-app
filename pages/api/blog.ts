@@ -54,6 +54,7 @@ export default async function handler(
     // await sql`INSERT INTO Pets (Name, Owner) VALUES (${petName}, ${ownerName});`;
     return response.status(200).json({ message: "ブログ記事が作成されました。" });
   } catch (error) {
+    console.log(error);
     // トランザクションを取り消し
     await sql`ROLLBACK`;
     return response.status(500).json({ error });
