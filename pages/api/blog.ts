@@ -22,10 +22,10 @@ export default async function handler(
 
     console.log(`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id`);
     // トランザクションを開始
-    await sql`BEGIN`;
+    await sql`BEGIN;`;
 
     // Blog_userテーブルにデータを登録し、idカラムの値を取得
-    const result = await sql`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id`;
+    const result = await sql`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id;`;
 
     // resultは配列なので、最初の要素を取り出す
     const row = result[0];
@@ -45,10 +45,10 @@ export default async function handler(
     console.log(postValuesString);
 
     // Postテーブルにデータを登録
-    await sql`INSERT INTO Post (${postColumnsString}) VALUES (${postValuesString})`;
+    await sql`INSERT INTO Post (${postColumnsString}) VALUES (${postValuesString});`;
 
     // トランザクションを確定
-    await sql`COMMIT`;
+    await sql`COMMIT;`;
     // const petName = request.query.petName as string;
     // const ownerName = request.query.ownerName as string;
     // if (!petName || !ownerName) throw new Error('Pet and owner names required');
@@ -57,7 +57,7 @@ export default async function handler(
   } catch (error) {
     console.log(error);
     // トランザクションを取り消し
-    await sql`ROLLBACK`;
+    await sql`ROLLBACK;`;
     return response.status(500).json({ error });
   }
 
