@@ -20,9 +20,9 @@ export default async function handler(
     const authorValuesString = `'${authorValues.join("','")}'`;
     console.log(authorValuesString);
 
-    console.log(`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id`);
-    // トランザクションを開始
-    await sql`BEGIN;`;
+    // console.log(`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id;`);
+    // // トランザクションを開始
+    // await sql`BEGIN;`;
 
     // Blog_userテーブルにデータを登録し、idカラムの値を取得
     const result = await sql`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id;`;
@@ -47,8 +47,8 @@ export default async function handler(
     // Postテーブルにデータを登録
     await sql`INSERT INTO Post (${postColumnsString}) VALUES (${postValuesString});`;
 
-    // トランザクションを確定
-    await sql`COMMIT;`;
+    // // トランザクションを確定
+    // await sql`COMMIT;`;
     // const petName = request.query.petName as string;
     // const ownerName = request.query.ownerName as string;
     // if (!petName || !ownerName) throw new Error('Pet and owner names required');
@@ -56,8 +56,8 @@ export default async function handler(
     return response.status(200).json({ message: "ブログ記事が作成されました。" });
   } catch (error) {
     console.log(error);
-    // トランザクションを取り消し
-    await sql`ROLLBACK;`;
+    // // トランザクションを取り消し
+    // await sql`ROLLBACK;`;
     return response.status(500).json({ error });
   }
 
