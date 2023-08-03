@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+// import { sql } from '@vercel/postgres';
 import { PrismaClient } from '@prisma/client'
 import { NextApiResponse, NextApiRequest } from 'next';
 
