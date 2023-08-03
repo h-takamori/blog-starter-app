@@ -31,7 +31,7 @@ export default async function handler(
     const blog_userInsertSql = `INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString});`;
     console.log(blog_userInsertSql);
     console.log(blog_userInsertSql === "INSERT INTO Blog_user (name,picture) VALUES ('ccccc','');");
-    const result = await sql`INSERT INTO Blog_user (name,picture) VALUES ('ccccc','');`;
+    const result = await sql`${blog_userInsertSql}`;
     console.log(result);
 
     // resultは配列なので、最初の要素を取り出す
