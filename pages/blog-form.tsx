@@ -8,13 +8,13 @@ type FormValues = {
   slug: string;
   title: string;
   excerpt: string;
-  coverImage?: string;
+  coverimage?: string;
   date: string;
   author: {
     name: string;
     picture?: string;
   };
-  ogImage: string;
+  ogimage: string;
   content: string;
 };
   
@@ -23,13 +23,13 @@ const schema = yup.object().shape({
   slug: yup.string().required("ブログ記事のURLは必須です").max(100, "ブログ記事のURLは100文字以内で入力してください"), // ブログ記事のURLは文字列で必須かつ最大100文字
   title: yup.string().required("タイトルは必須です"), // タイトルは文字列で必須
   excerpt: yup.string().required("概要は必須です").max(300, "概要は300文字以内で入力してください"), // 概要は文字列で必須かつ最大300文字
-  coverImage: yup.string(), // カバー画像は文字列で任意
+  coverimage: yup.string(), // カバー画像は文字列で任意
   date: yup.date().required("日付は必須です").max(new Date(), "日付は今日以前で入力してください"), // 日付はDate型で必須かつ今日以前
   author: yup.object().shape({ // 著者はオブジェクトで以下の形式
     name: yup.string().required("著者名は必須です"), // 著者名は文字列で必須
     picture: yup.string(), // 著者画像は文字列で任意
   }),
-  ogImage: yup.string(), // OG画像のURLは文字列で任意
+  ogimage: yup.string(), // OG画像のURLは文字列で任意
   content: yup.string().required("本文は必須です").max(100000, "本文は100000文字以内で入力してください"), // 本文は文字列で必須かつ最大100000文字
 });
 
@@ -62,13 +62,13 @@ export default function BlogForm() {
       slug: "",
       title: "",
       excerpt: "",
-      coverImage: "",
+      coverimage: "",
       date: "",
       author: {
         name: "",
         picture: "",
       },
-      ogImage: "",
+      ogimage: "",
       content: "",
     },
   });
@@ -122,13 +122,13 @@ export default function BlogForm() {
         </div>
 
         <div>
-          <label htmlFor="coverImage" className="block text-sm font-medium leading-6 text-gray-900">カバー画像のURL</label>
+          <label htmlFor="coverimage" className="block text-sm font-medium leading-6 text-gray-900">カバー画像のURL</label>
           <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="coverImage" type="text" {...register("coverImage")}
+            <input id="coverimage" type="text" {...register("coverimage")}
               className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
               />
-            {formState.errors.coverImage && (
-              <p className="error">{formState.errors.coverImage.message}</p>
+            {formState.errors.coverimage && (
+              <p className="error">{formState.errors.coverimage.message}</p>
             )}
           </div>
         </div>
@@ -170,13 +170,13 @@ export default function BlogForm() {
         </div>
 
         <div>
-          <label htmlFor="ogImage" className="block text-sm font-medium leading-6 text-gray-900">OG画像のURL</label>
+          <label htmlFor="ogimage" className="block text-sm font-medium leading-6 text-gray-900">OG画像のURL</label>
           <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="ogImage" type="text" {...register("ogImage")}
+            <input id="ogimage" type="text" {...register("ogimage")}
               className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
               />
-            {formState.errors.ogImage && (
-              <p className="error">{formState.errors.ogImage.message}</p>
+            {formState.errors.ogimage && (
+              <p className="error">{formState.errors.ogimage.message}</p>
             )}
           </div>
         </div>
