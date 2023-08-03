@@ -1,6 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { NextApiResponse, NextApiRequest } from 'next';
- 
+import { db } from '@vercel/postgres';
+
 export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
@@ -31,29 +32,33 @@ export default async function handler(
     const blog_userInsertSql = `INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString});`;
     console.log(blog_userInsertSql);
     console.log(blog_userInsertSql === "INSERT INTO Blog_user (name,picture) VALUES ('ccccc','');");
-    const result = await sql`${blog_userInsertSql}`;
-    console.log(result);
+    // const result = await sql`${blog_userInsertSql}`;
+    // console.log(result);
 
-    // resultは配列なので、最初の要素を取り出す
-    const row = result[0];
-    console.log(row);
+    const client = await db.connect();
+    await client.sql`${blog_userInsertSql}`;
+    
 
-    // idカラムの値を変数に代入
-    const id = row.id;
+    // // resultは配列なので、最初の要素を取り出す
+    // const row = result[0];
+    // console.log(row);
 
-    // idカラムの値をコンソールに出力
-    console.log(id);
+    // // idカラムの値を変数に代入
+    // const id = row.id;
 
-    post.authorId = id
-    const postColumns = Object.keys(post);
-    const postColumnsString = postColumns.join(",");
-    console.log(postColumnsString);
-    const postValues = Object.values(post);
-    const postValuesString = `'${postValues.join("','")}'`;
-    console.log(postValuesString);
+    // // idカラムの値をコンソールに出力
+    // console.log(id);
 
-    // Postテーブルにデータを登録
-    await sql`INSERT INTO Post (${postColumnsString}) VALUES (${postValuesString});`;
+    // post.authorId = id
+    // const postColumns = Object.keys(post);
+    // const postColumnsString = postColumns.join(",");
+    // console.log(postColumnsString);
+    // const postValues = Object.values(post);
+    // const postValuesString = `'${postValues.join("','")}'`;
+    // console.log(postValuesString);
+
+    // // Postテーブルにデータを登録
+    // await sql`INSERT INTO Post (${postColumnsString}) VALUES (${postValuesString});`;
 
     // // トランザクションを確定
     // await sql`COMMIT;`;
