@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "user" (
     "id" SERIAL NOT NULL,
-    "name" VARCHAR(255),
+    "name" VARCHAR(255) NOT NULL,
     "picture" VARCHAR(255),
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
@@ -10,13 +10,13 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "post" (
     "id" SERIAL NOT NULL,
-    "slug" VARCHAR(255),
-    "title" VARCHAR(255),
-    "excerpt" VARCHAR(1023),
+    "slug" VARCHAR(255) NOT NULL,
+    "title" VARCHAR(255) NOT NULL,
+    "excerpt" VARCHAR(1023) NOT NULL,
     "coverimage" VARCHAR(255),
-    "date" VARCHAR(255),
+    "date" VARCHAR(255) NOT NULL,
     "authorid" INTEGER NOT NULL,
-    "content" TEXT,
+    "content" TEXT NOT NULL,
     "ogimage" VARCHAR(255),
 
     CONSTRAINT "post_pkey" PRIMARY KEY ("id")
