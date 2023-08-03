@@ -59,7 +59,7 @@ type Params = {
 }
 
 export async function getServerSideProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
+  const post = await getPostBySlug(params.slug, [
     'title',
     'date',
     'slug',
