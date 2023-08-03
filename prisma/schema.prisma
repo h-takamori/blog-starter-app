@@ -9,12 +9,12 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model User {
+model Usertable {
   id      Int     @id @default(autoincrement())
   name    String? @db.VarChar(255)
   picture String? @db.VarChar(255)
   posts   Post[]
-  @@map("user")
+  @@map("usertable")
 }
 
 model Post {
@@ -27,6 +27,6 @@ model Post {
   authorid   Int
   content    String?
   ogimage    String?    @db.VarChar(255)
-  author  User? @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  author  Usertable? @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@map("post")
 }
