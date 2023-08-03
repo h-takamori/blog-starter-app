@@ -6,7 +6,7 @@ export default async function handler(
   response: NextApiResponse,
   ) {
   const prisma = new PrismaClient()
-  const users = await prisma.user.findMany()
+  const users = await prisma.usertable.findMany()
   const posts = await prisma.post.findMany()
   return response.status(200).json({ users, posts });
 }
