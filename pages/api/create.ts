@@ -14,5 +14,26 @@ export default async function handler(
     },
   })
 
-  return response.status(200).json({ user });
+  const newUser = await prisma.user.create({
+    data: {
+      name: 'Alice',
+      picture: 'https://example.com/alice.jpg',
+      posts: {
+        create: [
+          {
+            slug: 'hello-prisma',
+            title: 'Hello, Prisma!',
+            excerpt: 'This is my first post with Prisma.',
+            coverimage: 'https://example.com/hello-prisma.jpg',
+            date: '2023-08-01',
+            content: 'Prisma is a great tool for working with databases.',
+            ogimage: 'https://example.com/hello-prisma-og.jpg',
+          },
+        ],
+      },
+    },
+  })
+
+
+  return response.status(200).json({ newUser });
 }
