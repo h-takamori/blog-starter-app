@@ -49,9 +49,8 @@
 import { PrismaClient } from '@prisma/client'
 
 export async function getAllPosts(fields: string[] = []) {
-  const prisma = new PrismaClient()
-  
   // データベースからすべての投稿を取得
+  const prisma = new PrismaClient()
   const posts = await prisma.post.findMany({
     // authorのデータも取得
     include: {
@@ -89,4 +88,44 @@ export async function getAllPosts(fields: string[] = []) {
     
     return items
   })
+}
+
+export async function getPostBySlug(slug: string, fields: string[] = []) {
+  // データベースからslugに一致する投稿を取得
+  const prisma = new PrismaClient()
+  const post = await prisma.post.findUnique({
+    where: {
+      slug,
+    },
+    // authorのデータも取得
+    include: {
+      author: true,
+    },
+  })
+
+  type Items = {
+    [key: string]: string
+  }
+
+  const items: Items = {}
+
+  // Ensure only the minimal needed data is exposed
+  fields.forEach((field) => {
+    if (field === 'slug') {
+      items[field] = post.slug
+    }
+    if (field === 'content') {
+      items[field] = post.content
+    }
+
+    if (typeof post[field] !== 'undefined') {
+      items[field] = post[field]
+    }
+  })
+
+  // // authorのデータも追加
+  // items['author'] = post.author.name
+  // items['authorpicture'] = post.author.picture
+
+  return items
 }
