@@ -14,9 +14,7 @@ type FormValues = {
     name: string;
     picture?: string;
   };
-  ogImage: {
-    url?: string;
-  };
+  ogImage: string;
   content: string;
 };
   
@@ -31,9 +29,7 @@ const schema = yup.object().shape({
     name: yup.string().required("著者名は必須です"), // 著者名は文字列で必須
     picture: yup.string(), // 著者画像は文字列で任意
   }),
-  ogImage: yup.object().shape({ // OG画像はオブジェクトで以下の形式
-    url: yup.string(), // OG画像のURLは文字列で任意
-  }),
+  ogImage: yup.string(), // OG画像のURLは文字列で任意
   content: yup.string().required("本文は必須です").max(100000, "本文は100000文字以内で入力してください"), // 本文は文字列で必須かつ最大100000文字
 });
 
@@ -72,9 +68,7 @@ export default function BlogForm() {
         name: "",
         picture: "",
       },
-      ogImage: {
-        url: "",
-      },
+      ogImage: "",
       content: "",
     },
   });
@@ -178,11 +172,11 @@ export default function BlogForm() {
         <div>
           <label htmlFor="ogImage" className="block text-sm font-medium leading-6 text-gray-900">OG画像のURL</label>
           <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="ogImage" type="text" {...register("ogImage.url")}
+            <input id="ogImage" type="text" {...register("ogImage")}
               className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
               />
-            {formState.errors.ogImage?.url && (
-              <p className="error">{formState.errors.ogImage?.url.message}</p>
+            {formState.errors.ogImage && (
+              <p className="error">{formState.errors.ogImage.message}</p>
             )}
           </div>
         </div>

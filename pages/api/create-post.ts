@@ -1,6 +1,7 @@
-import { sql } from '@vercel/postgres';
+// import { sql } from '@vercel/postgres';
 import { NextApiResponse, NextApiRequest } from 'next';
-import { db } from '@vercel/postgres';
+import { PrismaClient } from '@prisma/client'
+// import { db } from '@vercel/postgres';
 
 export default async function handler(
   request: NextApiRequest,
@@ -12,31 +13,29 @@ export default async function handler(
   }
 
   try {
-    const { author, ...post } = request.body;
+    // const authorColumns = Object.keys(author);
+    // const authorColumnsString = authorColumns.join(",");
+    // console.log(authorColumnsString);
+    // const authorValues = Object.values(author);
+    // const authorValuesString = `'${authorValues.join("','")}'`;
+    // console.log(authorValuesString);
 
-    const authorColumns = Object.keys(author);
-    const authorColumnsString = authorColumns.join(",");
-    console.log(authorColumnsString);
-    const authorValues = Object.values(author);
-    const authorValuesString = `'${authorValues.join("','")}'`;
-    console.log(authorValuesString);
-
-    console.log("name,picture" === authorColumnsString);
-    console.log(`'ccccc',''` === authorValuesString);
+    // console.log("name,picture" === authorColumnsString);
+    // console.log(`'ccccc',''` === authorValuesString);
     // // トランザクションを開始
     // await sql`BEGIN;`;
 
     // Blog_userテーブルにデータを登録し、idカラムの値を取得
     // const result = await sql`INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString}) RETURNING id;`;
     // 文字列リテラルだと登録に成功する。テンプレートリテラルの埋め込みがうまくいっていないのでその調査から再スタート
-    const blog_userInsertSql = `INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString});`;
-    console.log(blog_userInsertSql);
-    console.log(blog_userInsertSql === "INSERT INTO Blog_user (name,picture) VALUES ('ccccc','');");
+    // const blog_userInsertSql = `INSERT INTO Blog_user (${authorColumnsString}) VALUES (${authorValuesString});`;
+    // console.log(blog_userInsertSql);
+    // console.log(blog_userInsertSql === "INSERT INTO Blog_user (name,picture) VALUES ('ccccc','');");
     // const result = await sql`${blog_userInsertSql}`;
     // console.log(result);
 
-    const client = await db.connect();
-    await client.sql`${blog_userInsertSql}`;
+    // const client = await db.connect();
+    // await client.sql`${blog_userInsertSql}`;
     
 
     // // resultは配列なので、最初の要素を取り出す
@@ -66,6 +65,21 @@ export default async function handler(
     // const ownerName = request.query.ownerName as string;
     // if (!petName || !ownerName) throw new Error('Pet and owner names required');
     // await sql`INSERT INTO Pets (Name, Owner) VALUES (${petName}, ${ownerName});`;
+
+    const { author, ...post } = request.body;
+
+    const prisma = new PrismaClient()
+    const newUser = await prisma.user.create({
+      data: {
+        ...author,
+        posts: {
+          create: [
+            { ...post },
+          ],
+        },
+      },
+    })
+
     return response.status(200).json({ message: "ブログ記事が作成されました。" });
   } catch (error) {
     console.log(error);
