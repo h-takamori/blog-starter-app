@@ -21,6 +21,7 @@ export default async function handler(
     console.log(authorValuesString);
 
     console.log("name,picture" === authorColumnsString);
+    console.log(`'c',''` === authorValuesString);
     // // トランザクションを開始
     // await sql`BEGIN;`;
 
