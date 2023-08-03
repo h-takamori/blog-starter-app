@@ -24,8 +24,9 @@ model Post {
   excerpt    String?    @db.VarChar(1023)
   coverimage String?    @db.VarChar(255)
   date       String?    @db.VarChar(255)
+  authorid   Int?
   content    String?
   ogimage    String?    @db.VarChar(255)
-  authorid  User? @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  author  User? @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@map("post")
 }
