@@ -77,131 +77,134 @@ export default function BlogForm() {
   const hasError = Object.keys(formState.errors).length > 0;
 
   return (
-    <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="slug" className="block text-sm font-medium leading-6 text-gray-900">ブログ記事のURL</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input
-              id="slug"
-              type="text"
-              {...register("slug")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-            />
-            {formState.errors.slug && (
-              <p className="error">{formState.errors.slug.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">タイトル</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input
-              id="title" 
-              type="text" 
-              {...register("title")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-            />
-            {formState.errors.title && (
-              <p className="error">{formState.errors.title.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="excerpt" className="block text-sm font-medium leading-6 text-gray-900">要約</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="excerpt" type="text" {...register("excerpt")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+    <>
+      <h1 className="mt-16 ml-32 text-5xl font-bold tracking-tighter leading-tight">新規投稿</h1>
+      <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="slug" className="block text-sm font-medium leading-6 text-gray-900">ブログ記事のURL</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input
+                id="slug"
+                type="text"
+                {...register("slug")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
               />
-            {formState.errors.excerpt && (
-              <p className="error">{formState.errors.excerpt.message}</p>
-            )}
+              {formState.errors.slug && (
+                <p className="error">{formState.errors.slug.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="coverimage" className="block text-sm font-medium leading-6 text-gray-900">カバー画像のURL</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="coverimage" type="text" {...register("coverimage")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+          <div>
+            <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">タイトル</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input
+                id="title" 
+                type="text" 
+                {...register("title")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
               />
-            {formState.errors.coverimage && (
-              <p className="error">{formState.errors.coverimage.message}</p>
-            )}
+              {formState.errors.title && (
+                <p className="error">{formState.errors.title.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">日付</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="date" type="date" {...register("date")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            {formState.errors.date && (
-              <p className="error">{formState.errors.date.message}</p>
-            )}
+          <div>
+            <label htmlFor="excerpt" className="block text-sm font-medium leading-6 text-gray-900">要約</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="excerpt" type="text" {...register("excerpt")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.excerpt && (
+                <p className="error">{formState.errors.excerpt.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="authorName" className="block text-sm font-medium leading-6 text-gray-900">著者名</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="authorName" type="text" {...register("author.name")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            {formState.errors.author?.name && (
-              <p className="error">{formState.errors.author?.name.message}</p>
-            )}
+          <div>
+            <label htmlFor="coverimage" className="block text-sm font-medium leading-6 text-gray-900">カバー画像のURL</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="coverimage" type="text" {...register("coverimage")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.coverimage && (
+                <p className="error">{formState.errors.coverimage.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="authorPicture" className="block text-sm font-medium leading-6 text-gray-900">著者画像のURL</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="authorPicture" type="text" {...register("author.picture")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            {formState.errors.author?.picture && (
-              <p className="error">{formState.errors.author?.picture.message}</p>
-            )}
+          <div>
+            <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">日付</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="date" type="date" {...register("date")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.date && (
+                <p className="error">{formState.errors.date.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="ogimage" className="block text-sm font-medium leading-6 text-gray-900">OG画像のURL</label>
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <input id="ogimage" type="text" {...register("ogimage")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            {formState.errors.ogimage && (
-              <p className="error">{formState.errors.ogimage.message}</p>
-            )}
+          <div>
+            <label htmlFor="authorName" className="block text-sm font-medium leading-6 text-gray-900">著者名</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="authorName" type="text" {...register("author.name")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.author?.name && (
+                <p className="error">{formState.errors.author?.name.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">本文</label>
-          {/* <input id="content" type="text" {...register("content")} /> */}
-          <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-            <textarea id="content" rows={10} cols={50} {...register("content")}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            {formState.errors.content && (
-              <p className="error">{formState.errors.content.message}</p>
-            )}
+          <div>
+            <label htmlFor="authorPicture" className="block text-sm font-medium leading-6 text-gray-900">著者画像のURL</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="authorPicture" type="text" {...register("author.picture")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.author?.picture && (
+                <p className="error">{formState.errors.author?.picture.message}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <button
-          type="submit"
-          disabled={hasError}
-          className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-        >
-          送信
-        </button>
-      </div>
-    </form>
+          <div>
+            <label htmlFor="ogimage" className="block text-sm font-medium leading-6 text-gray-900">OG画像のURL</label>
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <input id="ogimage" type="text" {...register("ogimage")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.ogimage && (
+                <p className="error">{formState.errors.ogimage.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">本文</label>
+            {/* <input id="content" type="text" {...register("content")} /> */}
+            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <textarea id="content" rows={10} cols={50} {...register("content")}
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              {formState.errors.content && (
+                <p className="error">{formState.errors.content.message}</p>
+              )}
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={hasError}
+            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            送信
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
