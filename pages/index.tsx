@@ -2,6 +2,7 @@ import Container from '../components/container'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
+import Link from 'next/link'
 import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
@@ -23,6 +24,7 @@ export default function Index({ allPosts }: Props) {
         </Head>
         <Container>
           <Intro />
+          <Link href="/blog-form" className="absolute top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
           {heroPost && (
             <HeroPost
               title={heroPost.title}
