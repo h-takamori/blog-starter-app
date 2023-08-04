@@ -22,8 +22,8 @@ export default function Index({ allPosts }: Props) {
         <Head>
           <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
         </Head>
+        <Link href="/blog-form" className="[position: fixed] top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
         <Container>
-          <Link href="/blog-form" className="absolute top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
           <Intro />
           {heroPost && (
             <HeroPost
