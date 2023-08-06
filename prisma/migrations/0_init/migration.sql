@@ -1,10 +1,10 @@
 -- CreateTable
-CREATE TABLE "user" (
+CREATE TABLE "author" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "picture" VARCHAR(255),
 
-    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "author_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -17,7 +17,6 @@ CREATE TABLE "post" (
     "date" VARCHAR(255) NOT NULL,
     "authorid" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
-    "ogimage" VARCHAR(255),
 
     CONSTRAINT "post_pkey" PRIMARY KEY ("id")
 );
@@ -26,5 +25,5 @@ CREATE TABLE "post" (
 CREATE UNIQUE INDEX "post_slug_key" ON "post"("slug");
 
 -- AddForeignKey
-ALTER TABLE "post" ADD CONSTRAINT "post_authorid_fkey" FOREIGN KEY ("authorid") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "post" ADD CONSTRAINT "post_authorid_fkey" FOREIGN KEY ("authorid") REFERENCES "author"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 

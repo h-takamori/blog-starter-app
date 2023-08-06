@@ -14,7 +14,7 @@ export default async function handler(
     const { author, ...post } = request.body;
 
     const prisma = new PrismaClient()
-    await prisma.user.create({
+    await prisma.author.create({
       data: {
         ...author,
         posts: {
