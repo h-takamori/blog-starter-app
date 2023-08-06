@@ -57,6 +57,12 @@ export async function getPostBySlug(slug: string, fields: string[] = []) {
 
   const items: Items = {}
 
+  // 投稿が取得できなかったときは404エラーになるように処置をする
+  if (!post) {
+    items.slug = null
+    return items
+  }
+
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
     if (field === 'slug') {
