@@ -21,10 +21,10 @@ type Props = {
 
 export default function Post({ post, morePosts, preview }: Props) {
   const router = useRouter()
+  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
   return (
     <Layout preview={preview}>
       <Link href="/blog-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
@@ -43,8 +43,7 @@ export default function Post({ post, morePosts, preview }: Props) {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
-                name={post.name}
-                picture={post.picture}
+                author={post.author}
               />
               <PostBody content={post.content} />
             </article>
@@ -66,8 +65,7 @@ export async function getServerSideProps({ params }: Params) {
     'title',
     'date',
     'slug',
-    'name',
-    'picture',
+    'author',
     'content',
     'ogImage',
     'coverImage',

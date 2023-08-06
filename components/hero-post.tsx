@@ -2,14 +2,14 @@ import Avatar from './avatar'
 import DateFormatter from './date-formatter'
 import Link from 'next/link'
 import CoverImage from './cover-image'
+import type Author from '../interfaces/author'
 
 type Props = {
   title: string
   coverImage: string
   date: string
   excerpt: string
-  name: string
-  picture: string
+  author: Author
   slug: string
 }
 
@@ -18,8 +18,7 @@ const HeroPost = ({
   coverImage,
   date,
   excerpt,
-  name,
-  picture,
+  author,
   slug,
 }: Props) => {
   return (
@@ -44,7 +43,7 @@ const HeroPost = ({
           <DateFormatter dateString={date} />
         </div>
         <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-        <Avatar name={name} picture={picture} />
+        <Avatar name={author.name} picture={author.picture} />
       </div>
     </section>
   )
