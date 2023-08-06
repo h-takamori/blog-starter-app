@@ -79,7 +79,8 @@ export default function BlogForm() {
       <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
         <div className="space-y-4">
           <div>
-            <label htmlFor="slug" className="block text-sm font-medium leading-6 text-gray-900">ブログ記事のURL</label>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="slug" className="font-medium leading-6 text-gray-900">ブログ記事のURL</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input
                 id="slug"
@@ -94,7 +95,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">タイトル</label>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="title" className="font-medium leading-6 text-gray-900">タイトル</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input
                 id="title" 
@@ -109,7 +111,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="excerpt" className="block text-sm font-medium leading-6 text-gray-900">要約</label>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="excerpt" className="font-medium leading-6 text-gray-900">要約</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input id="excerpt" type="text" {...register("excerpt")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -121,7 +124,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="coverimage" className="block text-sm font-medium leading-6 text-gray-900">カバー画像のURL</label>
+            <span className="bg-blue-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">任意</span>
+            <label htmlFor="coverimage" className="font-medium leading-6 text-gray-900">カバー画像のURL</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input id="coverimage" type="text" {...register("coverimage")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -133,7 +137,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">日付</label>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="date" className="font-medium leading-6 text-gray-900">日付</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input id="date" type="date" {...register("date")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -145,7 +150,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="authorName" className="block text-sm font-medium leading-6 text-gray-900">著者名</label>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="authorName" className="font-medium leading-6 text-gray-900">著者名</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input id="authorName" type="text" {...register("author.name")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -157,7 +163,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="authorPicture" className="block text-sm font-medium leading-6 text-gray-900">著者画像のURL</label>
+            <span className="bg-blue-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">任意</span>
+            <label htmlFor="authorPicture" className="font-medium leading-6 text-gray-900">著者画像のURL</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <input id="authorPicture" type="text" {...register("author.picture")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -169,8 +176,8 @@ export default function BlogForm() {
           </div>
 
           <div>
-            <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">本文</label>
-            {/* <input id="content" type="text" {...register("content")} /> */}
+          <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <label htmlFor="content" className="font-medium leading-6 text-gray-900">本文</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <textarea id="content" rows={10} cols={50} {...register("content")}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
