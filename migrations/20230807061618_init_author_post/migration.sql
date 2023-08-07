@@ -26,4 +26,3 @@ CREATE UNIQUE INDEX "post_slug_key" ON "post"("slug");
 
 -- AddForeignKey
 ALTER TABLE "post" ADD CONSTRAINT "post_authorid_fkey" FOREIGN KEY ("authorid") REFERENCES "author"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
