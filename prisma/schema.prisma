@@ -12,7 +12,7 @@ datasource db {
 model Author {
   id      Int     @id @default(autoincrement())
   name    String  @db.VarChar(255)
-  picture String? @db.VarChar(255)
+  picture String  @db.VarChar(255) @default("/assets/blog/authors/default-icon.png")
   posts   Post[]
   @@map("author")
 }
@@ -22,7 +22,7 @@ model Post {
   slug       String     @db.VarChar(255) @unique
   title      String     @db.VarChar(255)
   excerpt    String     @db.VarChar(1023)
-  coverimage String?    @db.VarChar(255)
+  coverimage String     @db.VarChar(255) @default("/assets/blog/download/default-image.jpg")
   date       String     @db.VarChar(255)
   authorid   Int
   content    String 

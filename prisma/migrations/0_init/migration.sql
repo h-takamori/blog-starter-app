@@ -2,7 +2,7 @@
 CREATE TABLE "author" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "picture" VARCHAR(255),
+    "picture" VARCHAR(255) NOT NULL DEFAULT '/assets/blog/authors/default-icon.png',
 
     CONSTRAINT "author_pkey" PRIMARY KEY ("id")
 );
@@ -13,7 +13,7 @@ CREATE TABLE "post" (
     "slug" VARCHAR(255) NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "excerpt" VARCHAR(1023) NOT NULL,
-    "coverimage" VARCHAR(255),
+    "coverimage" VARCHAR(255) NOT NULL DEFAULT '/assets/blog/download/default-image.jpg',
     "date" VARCHAR(255) NOT NULL,
     "authorid" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
