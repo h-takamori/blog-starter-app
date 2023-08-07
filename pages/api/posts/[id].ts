@@ -5,7 +5,7 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  if (request.body._method !== 'delete') {
+  if (request.method !== 'DELETE') {
     response.status(405).end();
     return
   }
