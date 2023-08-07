@@ -6,7 +6,7 @@ import type Author from '../interfaces/author'
 
 type Props = {
   title: string
-  coverImage: string
+  coverimage: string
   date: string
   excerpt: string
   author: Author
@@ -15,7 +15,7 @@ type Props = {
 
 const HeroPost = ({
   title,
-  coverImage,
+  coverimage,
   date,
   excerpt,
   author,
@@ -28,7 +28,7 @@ const HeroPost = ({
       </h2>
       <div className="flex flex-col md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div className="w-2/4 mb-5 hover:opacity-60 hover:duration-300">
-          <CoverImage title={title} src={coverImage} slug={slug} />
+          <CoverImage title={title} src={coverimage} slug={slug} />
         </div>
         <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
           <Link
