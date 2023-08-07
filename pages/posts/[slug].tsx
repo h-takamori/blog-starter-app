@@ -39,6 +39,10 @@ export default function Post({ post, morePosts, preview }: Props) {
                 <title>{title}</title>
                 <meta property="og:image" content={post.coverimage} />
               </Head>
+              <form method="post" action={`/api/posts/${post.id}`}>
+                <input type="hidden" name="_method" value="delete" />
+                <input className="bg-transparent border-none text-blue-500 underline cursor-pointer" type="submit" value="削除" />
+              </form>
               <PostHeader
                 title={post.title}
                 coverimage={post.coverimage}
@@ -62,6 +66,7 @@ type Params = {
 
 export async function getServerSideProps({ params }: Params) {
   const post = await getPostBySlug(params.slug, [
+    'id',
     'title',
     'date',
     'slug',
