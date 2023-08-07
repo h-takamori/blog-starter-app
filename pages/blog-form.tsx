@@ -36,7 +36,7 @@ export default function BlogForm() {
   // Next.jsのAPIに送信する関数
   const submitForm = async (data: FormValues) => {
     try {
-      const response = await fetch("/api/create-post", {
+      const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
