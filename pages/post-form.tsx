@@ -32,7 +32,7 @@ const schema = yup.object().shape({
 });
 
 // フォームコンポーネント
-export default function BlogForm() {
+export default function PostForm() {
   // Next.jsのAPIに送信する関数
   const submitForm = async (data: FormValues) => {
     try {

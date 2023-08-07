@@ -27,7 +27,7 @@ export default function Post({ post, morePosts, preview }: Props) {
   const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
   return (
     <Layout preview={preview}>
-      <Link href="/blog-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
+      <Link href="/post-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
       <Container>
         <Header />
         {router.isFallback ? (
