@@ -11,7 +11,7 @@ export default async function handler(
   }
 
   try {
-    const slug = request.query.slug
+    const slug = request.query.slug as string
 
     const prisma = new PrismaClient()
     const deletedPost = await prisma.post.delete({
