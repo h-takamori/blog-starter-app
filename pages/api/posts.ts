@@ -30,7 +30,7 @@ export default async function handler(
     } else {
       await prisma.post.update({
         where: {
-          slug: post.slug,
+          id: post.id,
       },
       data: { ...post },
     });

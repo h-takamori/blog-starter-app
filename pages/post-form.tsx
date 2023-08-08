@@ -68,6 +68,8 @@ export default function PostForm({ post }: Props) {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: yupResolver(schema) as any,
     defaultValues: {
+      // idだけは更新時にしか現れないので値がない場合の考慮が不要
+      id: post?.id,
       slug: post?.slug || "",
       title: post?.title || "",
       excerpt: post?.excerpt || "",
@@ -198,6 +200,8 @@ export default function PostForm({ post }: Props) {
             </div>
           </div>
 
+          {mode === "edit" ? <input name="id" value={post.id} hidden /> : null}
+
           <button
             type="submit"
             disabled={hasError}
@@ -224,6 +228,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const post = mode === "edit" && slug
   ? // 編集モード
     await getPostBySlug(slug, [
+      'id',
       'slug',
       'title',
       'excerpt',
