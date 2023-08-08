@@ -11,12 +11,11 @@ export default async function handler(
   }
 
   try {
-    const stringId = request.query.id
-    const id = Number(stringId)
+    const slug = request.query.slug
 
     const prisma = new PrismaClient()
     const deletedPost = await prisma.post.delete({
-      where: { id }
+      where: { slug }
     })
     console.log(deletedPost)
 

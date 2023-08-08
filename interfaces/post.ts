@@ -1,7 +1,6 @@
 import type Author from './author'
 
 type PostType = {
-  id: number
   slug: string
   title: string
   date: string

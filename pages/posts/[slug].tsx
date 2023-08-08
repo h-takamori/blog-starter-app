@@ -27,11 +27,11 @@ export default function Post({ post, morePosts, preview }: Props) {
   const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
 
 // 削除リンクのコンポーネント
-const DeleteLink = ({ id }) => {
+const DeleteLink = ({ slug }) => {
   // Next.jsのAPIに送信する関数
   const submitForm = async () => {
     try {
-      const response = await fetch(`/api/posts/${id}`, {
+      const response = await fetch(`/api/posts/${slug}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -74,7 +74,7 @@ const DeleteLink = ({ id }) => {
                 <meta property="og:image" content={post.coverimage} />
               </Head>
               <DeleteLink
-                id={post.id}
+                slug={post.slug}
               />
               <PostHeader
                 title={post.title}
@@ -99,7 +99,6 @@ type Params = {
 
 export async function getServerSideProps({ params }: Params) {
   const post = await getPostBySlug(params.slug, [
-    'id',
     'title',
     'date',
     'slug',
