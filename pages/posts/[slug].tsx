@@ -26,38 +26,38 @@ export default function Post({ post, morePosts, preview }: Props) {
   }
   const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
 
-// 削除リンクのコンポーネント
-const DeleteLink = ({ slug }) => {
-  // Next.jsのAPIに送信する関数
-  const submitForm = async () => {
-    try {
-      const response = await fetch(`/api/posts/${slug}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        alert("ブログ記事が削除されました");
-      } else {
-        alert("エラーが発生しました");
+  // 削除リンクのコンポーネント
+  const DeleteLink = ({ slug }) => {
+    // Next.jsのAPIに送信する関数
+    const submitForm = async () => {
+      try {
+        const response = await fetch(`/api/posts/${slug}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          alert("ブログ記事が削除されました");
+        } else {
+          alert("エラーが発生しました");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    };
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    const result = window.confirm("本当に削除しますか？");
-    if (result) {
-      submitForm();
-    }
-  };
+    const handleClick = (event) => {
+      event.preventDefault();
+      const result = window.confirm("本当に削除しますか？");
+      if (result) {
+        submitForm();
+      }
+    };
 
-  return (
-    <Link href="#" className="text-blue-500 underline hover:text-blue-700" onClick={handleClick}>
-      削除
-    </Link>
-  );
-};
+    return (
+      <Link href="#" className="text-blue-500 underline hover:text-blue-700" onClick={handleClick}>
+        削除
+      </Link>
+    );
+  };
 
   return (
     <Layout preview={preview}>

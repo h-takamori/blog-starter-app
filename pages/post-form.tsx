@@ -176,7 +176,7 @@ export default function PostForm() {
           </div>
 
           <div>
-          <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
+            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
             <label htmlFor="content" className="font-medium leading-6 text-gray-900">本文</label>
             <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
               <textarea id="content" rows={10} cols={50} {...register("content")}
