@@ -1,3 +1,4 @@
+// 記事の削除機能を受け持つファイル
 import { NextApiResponse, NextApiRequest } from 'next';
 import { PrismaClient } from '@prisma/client'
 

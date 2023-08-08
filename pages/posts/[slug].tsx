@@ -26,8 +26,8 @@ export default function Post({ post, morePosts, preview }: Props) {
   }
   const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
 
-  // 削除リンクのコンポーネント
-  const DeleteLink = ({ slug }) => {
+  // 記事削除リンクのコンポーネント
+  const DeleteLink = ({ slug, children }) => {
     // Next.jsのAPIに送信する関数
     const submitForm = async () => {
       try {
@@ -53,15 +53,25 @@ export default function Post({ post, morePosts, preview }: Props) {
     };
 
     return (
-      <Link href="#" className="text-blue-500 underline hover:text-blue-700" onClick={handleClick}>
-        削除
+      <Link href="#" onClick={handleClick}>
+        {children}
       </Link>
     );
   };
 
   return (
     <Layout preview={preview}>
-      <Link href="/post-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
+      <div style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">
+        <div>
+          <Link href="/post-form">新規投稿</Link>
+        </div>
+        <div>
+          <Link href={`/post-form?mode=edit&slug=${post.slug}`}>記事編集</Link>
+        </div>
+        <div>
+          <DeleteLink slug={post.slug}>記事削除</DeleteLink>
+        </div>
+      </div>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -73,9 +83,6 @@ export default function Post({ post, morePosts, preview }: Props) {
                 <title>{title}</title>
                 <meta property="og:image" content={post.coverimage} />
               </Head>
-              <DeleteLink
-                slug={post.slug}
-              />
               <PostHeader
                 title={post.title}
                 coverimage={post.coverimage}

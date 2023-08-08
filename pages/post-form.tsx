@@ -1,4 +1,8 @@
 import React from "react";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { ParsedUrlQuery } from "querystring";
+import { getPostBySlug } from '../lib/api'
+import type PostType from '../interfaces/post'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -31,20 +35,27 @@ const schema = yup.object().shape({
   content: yup.string().required("本文は必須です").max(100000, "本文は100000文字以内で入力してください"), // 本文は文字列で必須かつ最大100000文字
 });
 
+type Props = {
+  post: PostType
+}
+
 // フォームコンポーネント
-export default function PostForm() {
+export default function PostForm({ post }: Props) {
+  // postが空オブジェクトなら新規投稿モード、そうでないなら編集モード
+  const mode = Object.keys(post).length === 0 ? "create" : "edit";
+
   // Next.jsのAPIに送信する関数
   const submitForm = async (data: FormValues) => {
     try {
       const response = await fetch("/api/posts", {
-        method: "POST",
+        method: mode === "create" ? "POST" : "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        alert("ブログ記事が作成されました");
+        alert(`ブログ記事が${mode === "create" ? "作成" : "更新"}されました`);
       } else {
         alert("エラーが発生しました");
       }
@@ -57,25 +68,24 @@ export default function PostForm() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: yupResolver(schema) as any,
     defaultValues: {
-      slug: "",
-      title: "",
-      excerpt: "",
-      coverimage: "",
-      date: "",
+      slug: post?.slug || "",
+      title: post?.title || "",
+      excerpt: post?.excerpt || "",
+      coverimage: post?.coverimage || "",
+      date: post?.date || "",
       author: {
-        name: "",
-        picture: "",
+        name: post?.author?.name || "",
+        picture: post?.author?.picture || "",
       },
-      content: "",
+      content: post?.content || "",
     },
   });
 
   // フォームにエラーがあるかどうか
   const hasError = Object.keys(formState.errors).length > 0;
-
   return (
     <>
-      <h1 className="mt-16 ml-32 text-5xl font-bold tracking-tighter leading-tight">新規投稿</h1>
+      <h1 className="mt-16 ml-32 text-5xl font-bold tracking-tighter leading-tight">{mode === "create" ? "新規投稿" : "記事の編集"}</h1>
       <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
         <div className="space-y-4">
           <div>
@@ -200,3 +210,34 @@ export default function PostForm() {
     </>
   );
 };
+
+type Params = ParsedUrlQuery & {
+  slug: string;
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<Params>
+) => {
+  const { mode: modeOrArray, slug: slugOrArray } = context.query;
+  const mode = Array.isArray(modeOrArray) ? modeOrArray[0] : modeOrArray;
+  const slug = Array.isArray(slugOrArray) ? slugOrArray[0] : slugOrArray;
+  const post = mode === "edit" && slug
+  ? // 編集モード
+    await getPostBySlug(slug, [
+      'slug',
+      'title',
+      'excerpt',
+      'coverimage',
+      'date',
+      'author',
+      'content',
+    ])
+  : // 新規投稿モード
+    {};
+
+  return {
+    props: {
+      post, // 編集モードでなければ空のオブジェクトになる
+    },
+  };
+}
