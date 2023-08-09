@@ -15,11 +15,14 @@ export default async function handler(
 
     const prisma = new PrismaClient()
     const createdAuthor = await prisma.author.create({data: {...author}})
+    console.log(createdAuthor)
 
     if (request.method === 'POST') {
-      await prisma.post.create({
+      // Postモデルのidは@default(autoincrement())であるためcreateに値（null含む）を渡すとエラー
+      const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
+      const createdPost = await prisma.post.create({
         data: {
-          ...post,
+          ...postWithoutId,
           author: {
             connect: {
               id: createdAuthor.id,
@@ -27,17 +30,16 @@ export default async function handler(
           },
         },
       });  
+      console.log(createdPost)
     } else {
-      await prisma.post.update({
+      const updatedPost = await prisma.post.update({
         where: {
           id: post.id,
-      },
-      data: { ...post },
-    });
-  }
-
-
-
+        },
+        data: { ...post },
+      });
+      console.log(updatedPost)
+    }
     return response.status(200).json({ message: "Success!" });
   } catch (error) {
     console.log(error);

@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 // フォームの型定義
 type FormValues = {
+  id: number | null;
   slug: string;
   title: string;
   excerpt: string;
@@ -68,8 +69,7 @@ export default function PostForm({ post }: Props) {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: yupResolver(schema) as any,
     defaultValues: {
-      // idだけは更新時にしか現れないので値がない場合の考慮が不要
-      id: post?.id,
+      id: post?.id || null,
       slug: post?.slug || "",
       title: post?.title || "",
       excerpt: post?.excerpt || "",
