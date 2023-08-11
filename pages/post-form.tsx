@@ -2,10 +2,12 @@ import React from "react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getPostBySlug } from '../lib/api'
+import { useSession, signIn } from "next-auth/react"
 import type PostType from '../interfaces/post'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import LoginBtn from '../components/login-btn'
 
 // フォームの型定義
 type FormValues = {
@@ -20,6 +22,7 @@ type FormValues = {
     picture?: string;
   };
   content: string;
+  signinmail: string;
 };
   
 // バリデーションスキーマを定義
@@ -65,8 +68,10 @@ export default function PostForm({ post }: Props) {
     }
   };
 
+  const { data: session } = useSession()
+
   // React Hook Formとyupを使ってフォームを管理する
-  const { register, handleSubmit, formState } = useForm<FormValues>({
+  const { register, setValue, watch, handleSubmit, formState } = useForm<FormValues>({
     resolver: yupResolver(schema) as any,
     defaultValues: {
       id: post?.id || null,
@@ -80,13 +85,32 @@ export default function PostForm({ post }: Props) {
         picture: post?.author?.picture || "",
       },
       content: post?.content || "",
+      signinmail: session?.user.email || "",
     },
   });
 
   // フォームにエラーがあるかどうか
   const hasError = Object.keys(formState.errors).length > 0;
+
+  // signinmailをフォームの状態に設定する
+  React.useEffect(() => {
+    setValue("signinmail", session?.user.email);
+  }, [session, setValue]);
+
+  // signinmailをフォームの状態から取得する
+  const signinmail = watch("signinmail");
+
+  if (!session) {
+    return (
+      <div>
+        Oh, Not signed in <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </div>
+    )
+  }
   return (
     <>
+      <LoginBtn />
       <h1 className="mt-16 ml-32 text-5xl font-bold tracking-tighter leading-tight">{mode === "create" ? "新規投稿" : "記事の編集"}</h1>
       <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
         <div className="space-y-4">
@@ -201,6 +225,8 @@ export default function PostForm({ post }: Props) {
           </div>
 
           {mode === "edit" ? <input name="id" value={post.id} hidden /> : null}
+
+          <input type="hidden" name="signinmail" value={signinmail} readOnly />
 
           <button
             type="submit"

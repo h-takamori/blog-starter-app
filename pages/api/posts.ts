@@ -11,10 +11,10 @@ export default async function handler(
   }
 
   try {
-    const { author, ...post } = request.body;
+    const { author, signinmail, ...post } = request.body;
 
     const prisma = new PrismaClient()
-    const createdAuthor = await prisma.author.create({data: {...author}})
+    const createdAuthor = await prisma.author.create({data: {...author, signinmail}})
     console.log(createdAuthor)
 
     if (request.method === 'POST') {
@@ -22,10 +22,11 @@ export default async function handler(
       const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
       const createdPost = await prisma.post.create({
         data: {
+          signinmail,
           ...postWithoutId,
           author: {
             connect: {
-              id: createdAuthor.id,
+              signinmail: createdAuthor.signinmail,
             },
           },
         },

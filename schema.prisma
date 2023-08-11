@@ -10,22 +10,25 @@ datasource db {
 }
 
 model Author {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(255)
-  picture String  @db.VarChar(255) @default("/assets/blog/authors/default-icon.png")
-  posts   Post[]
+  id         Int    @id @default(autoincrement())
+  signinmail String @unique @db.VarChar(255)
+  name       String @db.VarChar(255)
+  picture    String @default("/assets/blog/authors/default-icon.png") @db.VarChar(255)
+  posts      Post[]
+
   @@map("author")
 }
 
 model Post {
-  id         Int        @id @default(autoincrement())
-  slug       String     @db.VarChar(255) @unique
-  title      String     @db.VarChar(255)
-  excerpt    String     @db.VarChar(1023)
-  coverimage String     @db.VarChar(255) @default("/assets/blog/download/default-image.jpg")
-  date       String     @db.VarChar(255)
-  authorid   Int
-  content    String 
-  author     Author     @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id         Int    @id @default(autoincrement())
+  signinmail String @db.VarChar(255)
+  slug       String @unique @db.VarChar(255)
+  title      String @db.VarChar(255)
+  excerpt    String @db.VarChar(1023)
+  coverimage String @default("/assets/blog/download/default-image.jpg") @db.VarChar(255)
+  date       String @db.VarChar(255)
+  content    String
+  author     Author @relation(fields: [signinmail], references: [signinmail], onDelete: NoAction, onUpdate: NoAction)
+
   @@map("post")
 }
