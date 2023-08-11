@@ -12,6 +12,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import type PostType from '../../interfaces/post'
+import LoginBtn from '../../components/login-btn'
 
 type Props = {
   post: PostType
@@ -62,6 +63,9 @@ export default function Post({ post, morePosts, preview }: Props) {
   return (
     <Layout preview={preview}>
       <div style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">
+        <div>
+          <LoginBtn />
+        </div>
         <div>
           <Link href="/post-form">新規投稿</Link>
         </div>

@@ -8,7 +8,7 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
-import Component from '../components/login-btn'
+import LoginBtn from '../components/login-btn'
 
 type Props = {
   allPosts: Post[]
@@ -23,7 +23,7 @@ export default function Index({ allPosts }: Props) {
         <Head>
           <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
         </Head>
-        <Component />
+        <LoginBtn />
         <Link href="/post-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
         <Container>
           <Intro />
