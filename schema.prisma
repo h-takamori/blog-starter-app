@@ -21,14 +21,14 @@ model Author {
 
 model Post {
   id         Int    @id @default(autoincrement())
-  signinmail String @db.VarChar(255)
   slug       String @unique @db.VarChar(255)
   title      String @db.VarChar(255)
   excerpt    String @db.VarChar(1023)
   coverimage String @default("/assets/blog/download/default-image.jpg") @db.VarChar(255)
   date       String @db.VarChar(255)
   content    String
-  author     Author @relation(fields: [signinmail], references: [signinmail], onDelete: NoAction, onUpdate: NoAction)
+  authorid   Int
+  author     Author @relation(fields: [authorid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("post")
 }

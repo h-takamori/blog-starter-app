@@ -22,11 +22,10 @@ export default async function handler(
       const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
       const createdPost = await prisma.post.create({
         data: {
-          signinmail,
           ...postWithoutId,
           author: {
             connect: {
-              signinmail: createdAuthor.signinmail,
+              id: createdAuthor.id,
             },
           },
         },
