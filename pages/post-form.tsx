@@ -102,8 +102,8 @@ export default function PostForm({ post }: Props) {
     )
   }
 
-  const visitorIsAuthor = mode === "edit" && session?.user?.email === post.author.signinmail
-  if (!visitorIsAuthor) {
+  const otherAuthor = mode === "edit" && session?.user?.email !== post.author.signinmail
+  if (otherAuthor) {
     return (
       <>
         <div>
