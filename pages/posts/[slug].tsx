@@ -12,7 +12,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import type PostType from '../../interfaces/post'
-import LoginBtn from '../../components/login-btn'
+import SideMenu from "../../components/side-menu"
+import { useSession, signIn, signOut } from "next-auth/react"
 
 type Props = {
   post: PostType
@@ -60,22 +61,47 @@ export default function Post({ post, morePosts, preview }: Props) {
     );
   };
 
+  const SideMenuContent = () => {
+    const { data: session } = useSession()
+    const visitorIsAuthor = session?.user?.email === post.author.signinmail
+    return (session
+      ?
+        <>
+          <div>
+            <Link href="/author-form">会員情報</Link>
+          </div>
+          <div>
+            <Link href="/post-form">新規投稿</Link>
+          </div>
+          {visitorIsAuthor
+            ? // サインイン済みかつ本人の記事の場合のみ表示
+              <>
+                <div>
+                  <Link href={`/post-form?mode=edit&slug=${post.slug}`}>記事編集</Link>
+                </div>
+                <div>
+                  <DeleteLink slug={post.slug}>記事削除</DeleteLink>
+                </div>
+              </>
+            : // サインイン済みだが他人の記事の場合
+              null
+          }
+          <div>
+            <button onClick={() => signOut()}>サインアウト</button>
+          </div>
+        </>
+      :
+        <div>
+          <button onClick={() => signIn()}>サインイン</button>
+        </div>
+    );
+  }
+  
   return (
     <Layout preview={preview}>
-      <div style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">
-        <div>
-          <LoginBtn />
-        </div>
-        <div>
-          <Link href="/post-form">新規投稿</Link>
-        </div>
-        <div>
-          <Link href={`/post-form?mode=edit&slug=${post.slug}`}>記事編集</Link>
-        </div>
-        <div>
-          <DeleteLink slug={post.slug}>記事削除</DeleteLink>
-        </div>
-      </div>
+      <SideMenu>
+        <SideMenuContent />
+      </SideMenu>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -113,9 +139,9 @@ export async function getServerSideProps({ params }: Params) {
     'title',
     'date',
     'slug',
-    'author',
     'content',
     'coverimage',
+    'author',
   ])
   const content = await markdownToHtml(post.content || '')
 

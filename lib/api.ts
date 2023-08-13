@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { getSession } from "next-auth/react"
 
 export async function getAllPosts(fields: string[] = []) {
   // データベースからすべての投稿を取得
@@ -78,4 +79,54 @@ export async function getPostBySlug(slug: string, fields: string[] = []) {
   })
 
   return items
+}
+
+export async function getAuthorBySession(fields: string[] = [], context) {
+  const session = await getSession(context)
+
+  // 訪問者がサインインしているかを管理する変数
+  const visitorIsSignedIn = !!session
+
+  if (!visitorIsSignedIn) {
+    return {
+      author: {},
+      signinmail: "",
+      visitorIsSignedIn,
+    };
+  }
+
+  const signinmail = session?.user?.email as string
+  // データベースからsigninmailに一致する会員情報を取得
+  const prisma = new PrismaClient()
+  const unfilteredAuthor = await prisma.author.findUnique({
+    where: {
+      signinmail,
+    },
+  })
+
+  // サインイン済みだが会員情報未登録の場合
+  if (!unfilteredAuthor) {
+    return {
+      author: {},
+      signinmail,
+      visitorIsSignedIn,
+    };
+  }
+
+  // これ以降は訪問者がサインイン済みかつ会員情報登録済みの場合
+  const author = {}
+  
+  // Ensure only the minimal needed data is exposed
+  fields.forEach((field) => {
+    if (typeof unfilteredAuthor[field] !== 'undefined') {
+      author[field] = unfilteredAuthor[field]
+    }
+  })
+
+  return {
+    author,
+    signinmail,
+    visitorIsSignedIn,
+  };
+
 }

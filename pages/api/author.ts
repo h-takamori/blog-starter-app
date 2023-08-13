@@ -11,38 +11,30 @@ export default async function handler(
   }
 
   try {
-    const { signinmail, ...post } = request.body;
+    const { signinmail, ...author } = request.body;
 
     const prisma = new PrismaClient()
-    const author = await prisma.author.findUnique({
-      where: {
-        signinmail,
-      },
-    })
-    console.log(author)
+    // const createdAuthor = await prisma.author.create({data: {...author, signinmail}})
+    // console.log(createdAuthor)
 
     if (request.method === 'POST') {
       // Postモデルのidは@default(autoincrement())であるためcreateに値（null含む）を渡すとエラー
-      const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
-      const createdPost = await prisma.post.create({
+    //   const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
+      const createdAuthor = await prisma.author.create({
         data: {
-          ...postWithoutId,
-          author: {
-            connect: {
-              id: author.id,
-            },
-          },
+          signinmail,
+          ...author,
         },
       });  
-      console.log(createdPost)
+      console.log(createdAuthor)
     } else {
-      const updatedPost = await prisma.post.update({
+      const updatedAuthor = await prisma.author.update({
         where: {
-          id: post.id,
+          signinmail,
         },
-        data: { ...post },
+        data: { ...author },
       });
-      console.log(updatedPost)
+      console.log(updatedAuthor)
     }
     return response.status(200).json({ message: "Success!" });
   } catch (error) {

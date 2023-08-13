@@ -2,12 +2,13 @@ import React from "react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getPostBySlug } from '../lib/api'
-import { useSession, signIn } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react"
 import type PostType from '../interfaces/post'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import LoginBtn from '../components/login-btn'
+import SideMenu from "../components/side-menu"
+import Link from 'next/link'
 
 // フォームの型定義
 type FormValues = {
@@ -17,10 +18,6 @@ type FormValues = {
   excerpt: string;
   coverimage?: string;
   date: string;
-  author: {
-    name: string;
-    picture?: string;
-  };
   content: string;
   signinmail: string;
 };
@@ -32,10 +29,6 @@ const schema = yup.object().shape({
   excerpt: yup.string().required("概要は必須です").max(300, "概要は300文字以内で入力してください"), // 概要は文字列で必須かつ最大300文字
   coverimage: yup.string(), // カバー画像は文字列で任意
   date: yup.date().required("日付は必須です").max(new Date(), "日付は今日以前で入力してください"), // 日付はDate型で必須かつ今日以前
-  author: yup.object().shape({ // 著者はオブジェクトで以下の形式
-    name: yup.string().required("著者名は必須です"), // 著者名は文字列で必須
-    picture: yup.string(), // 著者画像は文字列で任意
-  }),
   content: yup.string().required("本文は必須です").max(100000, "本文は100000文字以内で入力してください"), // 本文は文字列で必須かつ最大100000文字
 });
 
@@ -80,10 +73,6 @@ export default function PostForm({ post }: Props) {
       excerpt: post?.excerpt || "",
       coverimage: post?.coverimage || "",
       date: post?.date || "",
-      author: {
-        name: post?.author?.name || "",
-        picture: post?.author?.picture || "",
-      },
       content: post?.content || "",
       signinmail: session?.user.email || "",
     },
@@ -102,15 +91,54 @@ export default function PostForm({ post }: Props) {
 
   if (!session) {
     return (
-      <div>
-        Oh, Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </div>
+      <>
+        <SideMenu>
+          <button onClick={() => signIn()}>サインイン</button>
+        </SideMenu>
+        <div>
+          記事の投稿や編集を行いたい方はサインインをしてください。
+        </div>
+      </>
     )
   }
+
+  const visitorIsAuthor = mode === "edit" && session?.user?.email === post.author.signinmail
+  if (!visitorIsAuthor) {
+    return (
+      <>
+        <div>
+          他人の記事の編集はできません。
+        </div>
+      </>
+    )
+  }
+
+  const SideMenuContent = () => {
+    return (
+        <>
+          <div>
+            <Link href="/author-form">会員情報</Link>
+          </div>
+          {mode === "edit"
+            ?
+              <div>
+                <Link href="/post-form">新規投稿</Link>
+              </div>
+            :
+              null
+          }
+          <div>
+            <button onClick={() => signOut()}>サインアウト</button>
+          </div>
+        </>
+    );
+  }
+
   return (
     <>
-      <LoginBtn />
+      <SideMenu>
+        <SideMenuContent />
+      </SideMenu>
       <h1 className="mt-16 ml-32 text-5xl font-bold tracking-tighter leading-tight">{mode === "create" ? "新規投稿" : "記事の編集"}</h1>
       <form onSubmit={handleSubmit(submitForm)} className="mt-16 mb-16 ml-32">
         <div className="space-y-4">
@@ -181,32 +209,6 @@ export default function PostForm({ post }: Props) {
               />
               {formState.errors.date && (
                 <p className="error">{formState.errors.date.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <span className="bg-red-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">必須</span>
-            <label htmlFor="authorName" className="font-medium leading-6 text-gray-900">著者名</label>
-            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <input id="authorName" type="text" {...register("author.name")}
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-              {formState.errors.author?.name && (
-                <p className="error">{formState.errors.author?.name.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <span className="bg-blue-500 text-white font-bold text-xs px-2 py-0.5 mr-1 rounded focus:outline-none focus:shadow-outline">任意</span>
-            <label htmlFor="authorPicture" className="font-medium leading-6 text-gray-900">著者画像のURL</label>
-            <div className="flex rounded-md ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <input id="authorPicture" type="text" {...register("author.picture")}
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-              {formState.errors.author?.picture && (
-                <p className="error">{formState.errors.author?.picture.message}</p>
               )}
             </div>
           </div>

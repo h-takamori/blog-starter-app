@@ -8,7 +8,8 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
-import LoginBtn from '../components/login-btn'
+import { useSession, signIn, signOut } from "next-auth/react"
+import SideMenu from '../components/side-menu'
 
 type Props = {
   allPosts: Post[]
@@ -17,14 +18,38 @@ type Props = {
 export default function Index({ allPosts }: Props) {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
+
+  const SideMenuContent = () => {
+    const { data: session } = useSession()
+    return (session
+      ?
+        <>
+          <div>
+            <Link href="/author-form">会員情報</Link>
+          </div>
+          <div>
+            <Link href="/post-form">新規投稿</Link>
+          </div>
+          <div>
+            <button onClick={() => signOut()}>サインアウト</button>
+          </div>
+        </>
+      :
+        <div>
+          <button onClick={() => signIn()}>サインイン</button>
+        </div>
+    );
+  }
+
   return (
     <>
       <Layout>
         <Head>
           <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
         </Head>
-        <LoginBtn />
-        <Link href="/post-form" style={{position: "fixed", zIndex: 1}} className="top-2.5 right-2.5 px-2.5 py-2.5">新規投稿</Link>
+        <SideMenu>
+          <SideMenuContent />
+        </SideMenu>
         <Container>
           <Intro />
           {heroPost && (
