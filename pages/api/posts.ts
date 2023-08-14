@@ -13,6 +13,10 @@ export default async function handler(
   try {
     const { signinmail, ...post } = request.body;
 
+    if (!post.coverimage) {
+      post.coverimage = "/assets/blog/download/default-image.jpg"
+    }
+
     const prisma = new PrismaClient()
     const author = await prisma.author.findUnique({
       where: {

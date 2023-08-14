@@ -12,14 +12,13 @@ export default async function handler(
 
   try {
     const { signinmail, ...author } = request.body;
+    
+    if (!author.picture) {
+      author.picture = "/assets/blog/authors/default-icon.png"
+    }
 
     const prisma = new PrismaClient()
-    // const createdAuthor = await prisma.author.create({data: {...author, signinmail}})
-    // console.log(createdAuthor)
-
     if (request.method === 'POST') {
-      // Postモデルのidは@default(autoincrement())であるためcreateに値（null含む）を渡すとエラー
-    //   const { id, ...postWithoutId } = post; // dataに含めないよう分離する。idは使わない
       const createdAuthor = await prisma.author.create({
         data: {
           signinmail,
